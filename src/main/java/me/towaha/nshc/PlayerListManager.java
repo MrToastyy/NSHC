@@ -18,6 +18,6 @@ public class PlayerListManager {
 
     public void updatePlayerList(Player player) {
         // Update the player list for the player here.
-        player.setPlayerListHeaderFooter("§b§lWelcome to §6§lXenos§!", "§b§lPlayers online: §e" + main.getServer().getOnlinePlayers().size());
+        player.setPlayerListHeaderFooter("§b§lWelcome to §6§lXenos§!", "§b§lPlayers online: §e§l" + main.getServer().getOnlinePlayers().size());
     }
 }
