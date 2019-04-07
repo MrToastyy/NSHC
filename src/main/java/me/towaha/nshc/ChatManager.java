@@ -4,17 +4,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ChatManager {
-    public ChatManager
+    NSHC main;
 
-    public static void sendConsoleMessage(String msg) {
+    public ChatManager(NSHC main) {
+        this.main = main;
+    }
+
+    public void sendConsoleMessage(String msg) {
 
     }
 
-    public static void sendMessage(String msg) {
+    public void sendMessage(String msg) {
 
     }
 
-    public static void sendMessage(String msg, Player player) {
+    public void sendMessage(String msg, Player player) {
 
     }
 }
