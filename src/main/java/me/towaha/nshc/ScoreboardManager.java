@@ -40,7 +40,7 @@ public class ScoreboardManager {
         Score blank2 = objective.getScore("  ");                                            blank2.setScore(5);
 
         Score borderDistance = objective.getScore("§9§l> §b§lBorder position:");            borderDistance.setScore(4);
-        Score borderDistanceValue = objective.getScore("§3§lx: §r[x] §7§l| §3§ly: §r[y]");  borderDistanceValue.setScore(3);
+        Score borderDistanceValue = objective.getScore("§r+[x], +[y]");                 borderDistanceValue.setScore(3);
 
         Score blank3 = objective.getScore("   ");                                           blank3.setScore(2);
 
