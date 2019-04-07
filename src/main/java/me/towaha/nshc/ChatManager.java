@@ -1,5 +1,7 @@
 package me.towaha.nshc;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,7 +14,7 @@ public class ChatManager {
 
     public void sendConsoleMessage(String msg) {
         // This will log a formatted message to the console.
-        main.getLogger().info(msg); // TODO: 7-4-2019 - Change to your method @Toaster
+        main.getServer().getConsoleSender().sendMessage("§7[§bNSHC§7] §r" + msg);
     }
 
     public void broadcastMessage(String msg) {
@@ -23,6 +25,10 @@ public class ChatManager {
     }
 
     public void sendMessage(String msg, Player player) {
-        player.sendMessage("§9NSHC §8>> §r" + msg);
+        player.sendMessage("§9NSHC §8» §r" + msg);
+    }
+
+    public void actionBarMessage(String msg, Player player) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
     }
 }
