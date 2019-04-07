@@ -4,10 +4,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NSHC extends JavaPlugin {
 
+    public ChatManager cm;
+    public ScoreboardManager sm;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        // Create instances of all the available managers.
+        cm = new ChatManager(this);
+        sm = new ScoreboardManager(this);
 
+        cm.sendConsoleMessage("Plugin has finished loading.");
     }
 
     @Override
