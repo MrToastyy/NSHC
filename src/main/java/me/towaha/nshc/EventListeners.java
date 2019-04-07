@@ -18,8 +18,6 @@ public class EventListeners implements Listener {
 
         main.lm.updatePlayerList();
         main.sm.updateScoreboard();
-
-        e.getPlayer().spigot().setCollidesWithEntities(false);
     }
 
     @EventHandler
@@ -28,6 +26,5 @@ public class EventListeners implements Listener {
 
         main.lm.updatePlayerList();
         main.sm.updateScoreboard();
-        e.getPlayer().spigot().setCollidesWithEntities(false);
     }
 }
