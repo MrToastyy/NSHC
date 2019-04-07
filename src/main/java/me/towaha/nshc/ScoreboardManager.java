@@ -26,7 +26,7 @@ public class ScoreboardManager {
         org.bukkit.scoreboard.ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
 
-        Objective objective = scoreboard.registerNewObjective("scoreboard","dummy", "§e§l");
+        Objective objective = scoreboard.registerNewObjective("scoreboard","dummy", "§6§lXenos");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Score playersAlive = objective.getScore("§9§l> §b§lPlayers Alive:");                playersAlive.setScore(10);
@@ -40,7 +40,7 @@ public class ScoreboardManager {
         Score blank2 = objective.getScore("  ");                                            blank2.setScore(5);
 
         Score borderDistance = objective.getScore("§9§l> §b§lDistance from border:");       borderDistance.setScore(4);
-        Score borderDistanceValue = objective.getScore("§9§lx: §r[x] §7§l| §9§ly: §r[y]");  borderDistanceValue.setScore(3);
+        Score borderDistanceValue = objective.getScore("§3§lx: §r[x] §7§l| §3§ly: §r[y]");  borderDistanceValue.setScore(3);
 
         Score blank3 = objective.getScore("   ");                                           blank3.setScore(2);
 
