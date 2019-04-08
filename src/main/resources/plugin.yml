@@ -4,3 +4,7 @@ main: me.towaha.nshc.NSHC
 api-version: 1.13
 authors: [Toaster, Nowaha]
 description: A very origional survival gamemode
+
+commands:
+  nshcbossbar:
+    usage: /<command>

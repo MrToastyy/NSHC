@@ -12,23 +12,23 @@ public class ChatManager {
         this.main = main;
     }
 
-    public void sendConsoleMessage(String msg) {
+    public void sendConsoleMessage(String message) {
         // This will log a formatted message to the console.
-        main.getServer().getConsoleSender().sendMessage("§7[§bNSHC§7] §r" + msg);
+        main.getServer().getConsoleSender().sendMessage("§7[§bNSHC§7] §r" + message);
     }
 
-    public void broadcastMessage(String msg) {
+    public void broadcastMessage(String message) {
         // This will send a message to all the players that are currently online.
         for (Player player : main.getServer().getOnlinePlayers()) {
-            sendMessage(msg, player);
+            sendMessage(message, player);
         }
     }
 
-    public void sendMessage(String msg, Player player) {
-        player.sendMessage("§9NSHC §8» §r" + msg);
+    public void sendMessage(String message, Player player) {
+        player.sendMessage("§9NSHC §8» §r" + message);
     }
 
-    public void actionBarMessage(String msg, Player player) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
+    public void actionBarMessage(String message, Player player) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
     }
 }

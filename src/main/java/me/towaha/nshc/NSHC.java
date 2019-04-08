@@ -8,6 +8,7 @@ public final class NSHC extends JavaPlugin {
     public ChatManager cm;
     public ScoreboardManager sm;
     public PlayerListManager lm;
+    public BossbarManager bm;
 
     @Override
     public void onEnable() {
@@ -16,11 +17,16 @@ public final class NSHC extends JavaPlugin {
         sm = new ScoreboardManager(this);
         el = new EventListeners(this);
         lm = new PlayerListManager(this);
+        bm = new BossbarManager(this);
 
         // Register the events class as an event handler.
         getServer().getPluginManager().registerEvents(el, this);
 
         cm.sendConsoleMessage("Plugin has finished loading.");
+        bm.onStart();
+
+        // Register the commands to separate classes.
+        this.getCommand("NSHCBossBar").setExecutor(bm);
     }
 
     @Override
