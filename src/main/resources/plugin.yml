@@ -8,3 +8,5 @@ description: A very origional survival gamemode
 commands:
   nshcbossbar:
     usage: /<command>
+  nshcscoreboard:
+    usage: /<command>

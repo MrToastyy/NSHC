@@ -23,14 +23,17 @@ public final class NSHC extends JavaPlugin {
         getServer().getPluginManager().registerEvents(el, this);
 
         cm.sendConsoleMessage("Plugin has finished loading.");
-        bm.onStart();
+        bm.onEnable();
+        sm.onEnable();
 
         // Register the commands to separate classes.
-        this.getCommand("NSHCBossBar").setExecutor(bm);
+        this.getCommand("nshcbossbar").setExecutor(bm);
+        this.getCommand("nshcscoreboard").setExecutor(sm);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        bm.onDisable();
     }
 }

@@ -18,6 +18,7 @@ public class EventListeners implements Listener {
 
         main.lm.updatePlayerList();
         main.sm.updateScoreboard();
+        main.bm.onJoin(e.getPlayer());
     }
 
     @EventHandler
@@ -26,5 +27,6 @@ public class EventListeners implements Listener {
 
         main.lm.updatePlayerList();
         main.sm.updateScoreboard();
+        main.bm.onQuit(e.getPlayer());
     }
 }
