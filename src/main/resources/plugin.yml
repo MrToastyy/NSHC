@@ -6,6 +6,8 @@ authors: [Toaster, Nowaha]
 description: A very origional survival gamemode
 
 commands:
+  nshcgamemanager:
+    usage: /<command>
   nshcbossbar:
     usage: /<command>
   nshcscoreboard:

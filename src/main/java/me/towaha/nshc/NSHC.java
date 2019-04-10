@@ -9,6 +9,7 @@ public final class NSHC extends JavaPlugin {
     public ScoreboardManager sm;
     public PlayerListManager lm;
     public BossbarManager bm;
+    public GameManager gm;
 
     @Override
     public void onEnable() {
@@ -18,6 +19,7 @@ public final class NSHC extends JavaPlugin {
         el = new EventListeners(this);
         lm = new PlayerListManager(this);
         bm = new BossbarManager(this);
+        gm = new GameManager(this);
 
         // Register the events class as an event handler.
         getServer().getPluginManager().registerEvents(el, this);
@@ -25,10 +27,12 @@ public final class NSHC extends JavaPlugin {
         cm.sendConsoleMessage("Plugin has finished loading.");
         bm.onEnable();
         sm.onEnable();
+        gm.onEnable();
 
         // Register the commands to separate classes.
         this.getCommand("nshcbossbar").setExecutor(bm);
         this.getCommand("nshcscoreboard").setExecutor(sm);
+        this.getCommand("nshcgamemanager").setExecutor(gm);
     }
 
     @Override
