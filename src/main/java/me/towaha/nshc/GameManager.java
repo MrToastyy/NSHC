@@ -1,6 +1,7 @@
 package me.towaha.nshc;
 
 import com.mysql.fabric.xmlrpc.base.Array;
+import com.mysql.jdbc.StringUtils;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -41,7 +42,7 @@ public class GameManager implements CommandExecutor, TabCompleter {
         } catch (NullPointerException | IllegalArgumentException e) {
             main.cm.sendConsoleMessage("§cThe world §4" + worldStr + " §ccould not be found.\n§4Exception: " + e);
             for (Player target : Bukkit.getOnlinePlayers()) {
-                if(target.hasPermission("gamemanager.admin")) {
+                if(target.hasPermission("nshc.admin")) {
                     main.cm.sendMessage("§cThe world §4" + worldStr + " §ccould not be found. §8(§7GameManager.Ln:41§8)\n§4Exception: " + e, target);
                 }
             }
@@ -115,24 +116,58 @@ public class GameManager implements CommandExecutor, TabCompleter {
         if(command.getName().equalsIgnoreCase("nshcgamemanager")) {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
-                if(sender.hasPermission("nshc.gamemanger")) {
+                if(main.hasPermission(player, "nshc.gamemanger.info")) {
                     if(args.length == 0) {
                         main.cm.sendMessage("§6Usage:" +
                                 "\n§8- §f/nshcgamemanager broadcast §7[message]", player);
                     } else {
                         if(args[0].equalsIgnoreCase("startgame")) {
-                            if(args.length >= 2) {
-                                if(args[1].equalsIgnoreCase("xvx")) {
-
-                                } else if(args[1].equalsIgnoreCase("xvxvx")) {
-
-                                } else if(args[1].equalsIgnoreCase("3v3")) {
-
-                                } else if(args[1].equalsIgnoreCase("4v4")) {
-
+                            if(main.hasPermission(player, "nshc.gamemanger.startgame")) {
+                                if(args.length >= 2) {
+                                    if(args[1].equalsIgnoreCase("custom")) {
+                                        if(args.length >= 3) {
+                                            if(isNumeric(args[2]) || correctGameTypeFormat(args[2])) {
+                                                if(args.length >= 4) {
+                                                    if(isNumeric(args[3])) {
+                                                        int playersPerTeam = Integer.parseInt(args[3]);
+                                                        if(playersPerTeam > 4)
+                                                            main.cm.sendMessage("§eTeams that are bigger than 4 players are not recommended. \n§7This will for example not fit on the scoreboard.", player);
+                                                        if(args.length >= 5) {
+                                                            if(args.length >= 6) {
+                                                                //TODO: make a game with the current settings
+                                                            } else {
+                                                                //TODO: make a game with the current settings and no perks
+                                                            }
+                                                        } else {
+                                                            //TODO: make a game with the current settings, and with default time and no perks
+                                                        }
+                                                    } else {
+                                                        main.cm.sendMessage("§ePlease specify the amount of players per team with a number.", player);
+                                                    }
+                                                } else {
+                                                    main.cm.sendMessage("§ePlease also specify how many players need to be in each team.", player);
+                                                }
+                                            } else {
+                                                main.cm.sendMessage("§ePlease input in this format:" +
+                                                        "\n§7      §ePvP §7or §ePvPvPvPvP §7or you can input a number", player);
+                                            }
+                                        } else {
+                                            main.cm.sendMessage("§6Usage: " +
+                                                    "\n§8- §7/...custom §f<type> <PPT> [time] [perks]" +
+                                                    "\n§8- §btype: §fhow the teams are balanced, for example:" +
+                                                    "\n         §ePvP §7or §ePvPvPvPvP §7or you can input a number" +
+                                                    "\n§8- §bPPT: §fplayer per team" +
+                                                    "\n§8- §btime: §7(optional) §fsets the time in minutes" +
+                                                    "\n§8- §bperks: §7(optional) §fsets the perks", player);
+                                        }
+                                    } else if(args[1].equalsIgnoreCase("standard")) {
+                                        main.cm.sendMessage("§dThis command is a work in progress, it does nothing for now.", player);
+                                    } else {
+                                        main.cm.sendMessage("§eThe argument §6" + args[1] + " §eis not a valid argument.", player);
+                                    }
+                                } else {
+                                    main.cm.sendMessage("§ePlease also specify what kind of game needs to be started.", player);
                                 }
-                            } else {
-                                main.cm.sendMessage("§ePlease also specify what kind of game needs to be started.", player);
                             }
                         } else if(args[0].equalsIgnoreCase("broadcast")) {
                             if(args.length >= 2) {
@@ -144,12 +179,11 @@ public class GameManager implements CommandExecutor, TabCompleter {
                             main.cm.sendMessage("§eThe argument §6" + args[0] + " §eis not a valid argument.", player);
                         }
 
-                        //Temporary
+                        //FIXME: Temporary
                         if(args[0].equalsIgnoreCase("test")) {
                             main.wm.setWorldBorderSize(Integer.parseInt(args[0]));
                         }
                     }
-
                 }
                 return true;
             } else {
@@ -166,6 +200,9 @@ public class GameManager implements CommandExecutor, TabCompleter {
             if(args.length == 1) {
                 List<String> options = new ArrayList<>(Arrays.asList("startgame", "broadcast"));
                 return main.getAvailableOptions(options, args[0]);
+            } else if(args.length == 2) {
+                List<String> options = new ArrayList<>(Arrays.asList("standard", "custom"));
+                return main.getAvailableOptions(options, args[1]);
             }
         }
         return null;
@@ -176,5 +213,29 @@ public class GameManager implements CommandExecutor, TabCompleter {
             throw new IllegalArgumentException("max must be greater than min");
         }
         return random.nextInt((max - min) + 1) + min;
+    }
+
+    private static boolean isNumeric(String string) {
+        try {
+            Double.parseDouble(string);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    private boolean correctGameTypeFormat(String string) {
+        int correctCharacters = 0;
+        string = string.toLowerCase();
+        for(int i = 0; i < string.length(); i++) {
+            if(i % 2 == 0) {
+                if(string.charAt(i) == 'p')
+                    correctCharacters++;
+            } else {
+                if(string.charAt(i) == 'v')
+                    correctCharacters++;
+            }
+        }
+        return correctCharacters == string.length() && string.charAt(string.length() - 1) != 'v' && string.length() >= 3;
     }
 }

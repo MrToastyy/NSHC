@@ -161,7 +161,7 @@ public class ScoreboardManager implements CommandExecutor, TabCompleter {
         if(command.getName().equalsIgnoreCase("nshcscoreboard")) {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
-                if(player.hasPermission("nshc.scoreboard")) {
+                if(main.hasPermission(player, "nshc.scoreboard")) {
                     if(args.length == 0) {
                         main.cm.sendMessage(
                                 "§6Usage:" +
@@ -186,8 +186,6 @@ public class ScoreboardManager implements CommandExecutor, TabCompleter {
                             main.cm.sendMessage("§eThe argument §6" + args[0] + " §eis not a valid argument.", player);
                         }
                     }
-                } else {
-                    main.cm.sendMessage("§cYou do not have the permission to execute that command.", player);
                 }
             } else {
                 sender.sendMessage("§7[§bNSHC§7] §cOnly players can use this command.");

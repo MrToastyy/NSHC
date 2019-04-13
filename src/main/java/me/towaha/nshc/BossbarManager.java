@@ -96,7 +96,7 @@ public class BossbarManager implements CommandExecutor, TabCompleter {
         if(command.getName().equalsIgnoreCase("NSHCBossBar")) {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
-                if(sender.hasPermission("nshc.bossbar")) {
+                if(main.hasPermission(player, "nshc.bossbar")) {
                     if(args.length == 0) {
                         main.cm.sendMessage(
                                 "§6Usage:" +
@@ -182,9 +182,6 @@ public class BossbarManager implements CommandExecutor, TabCompleter {
                         }
                         return true;
                     }
-                } else {
-                    main.cm.sendMessage("§cYou do not have the permission to execute that command.", player);
-                    return true;
                 }
             } else {
                 sender.sendMessage("§7[§bNSHC§7] §cOnly players can use this command.");
