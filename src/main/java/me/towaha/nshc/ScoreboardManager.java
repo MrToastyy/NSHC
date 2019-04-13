@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -11,7 +12,11 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-public class ScoreboardManager implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class ScoreboardManager implements CommandExecutor, TabCompleter {
     //TODO: store the variable animatedScoreboard in the config.
 
     NSHC main;
@@ -190,5 +195,21 @@ public class ScoreboardManager implements CommandExecutor {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if(command.getName().equalsIgnoreCase("nshcscoreboard")) {
+            if(args.length == 1) {
+                List<String> options = new ArrayList<>(Arrays.asList("animated"));
+                return main.getAvailableOptions(options, args[0]);
+            } else if(args.length == 2) {
+                if(args[0].equalsIgnoreCase("animated")) {
+                    List<String> options = new ArrayList<>(Arrays.asList("true", "false"));
+                    return main.getAvailableOptions(options, args[1]);
+                }
+            }
+        }
+        return null;
     }
 }

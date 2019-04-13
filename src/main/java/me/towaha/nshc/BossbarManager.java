@@ -8,6 +8,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class BossbarManager implements CommandExecutor {
+public class BossbarManager implements CommandExecutor, TabCompleter {
     NSHC main;
 
     private BossBar bar;
@@ -141,8 +142,8 @@ public class BossbarManager implements CommandExecutor {
                             if(args.length >= 2) {
                                 for (Player target : Bukkit.getOnlinePlayers()) {
                                     if(target.getName().equals(args[1]) || target.getDisplayName().equals(args[1])) {
-                                        if(playersWithBossBar.contains(target)) {
-                                            main.cm.sendMessage("§eThat player already has a BossBar.", player);
+                                        if(!playersWithBossBar.contains(target)) {
+                                            main.cm.sendMessage("§eThat player doesn't have a BossBar.", player);
                                             return true;
                                         } else {
                                             removeBossbarPlayer(target, true);
@@ -191,6 +192,22 @@ public class BossbarManager implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if(command.getName().equalsIgnoreCase("NSHCBossBar")) {
+            if(args.length == 1) {
+                List<String> options = new ArrayList<>(Arrays.asList("settitle","addplayer","removeplayer","setcolor"));
+                return main.getAvailableOptions(options, args[0]);
+            } else if(args.length == 2) {
+                if(args[0].equalsIgnoreCase("setcolor")) {
+                    List<String> options = new ArrayList<>(Arrays.asList("white","blue","green","pink","purple","red","yellow"));
+                    return main.getAvailableOptions(options, args[1]);
+                }
+            }
+        }
+        return null;
     }
 
     public void changeBossbarColor(String color) {

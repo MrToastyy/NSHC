@@ -17,6 +17,12 @@ public class ChatManager {
         main.getServer().getConsoleSender().sendMessage("§7[§bNSHC§7] §r" + message);
     }
 
+    public void specialBroadcastMessage(String message) {
+        for (Player player : main.getServer().getOnlinePlayers()) {
+            player.sendMessage("§9NSHC§7-§bBroadcast §8» §r" + message);
+        }
+    }
+
     public void broadcastMessage(String message) {
         // This will send a message to all the players that are currently online.
         for (Player player : main.getServer().getOnlinePlayers()) {

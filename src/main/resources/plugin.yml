@@ -8,7 +8,10 @@ description: A very origional survival gamemode
 commands:
   nshcgamemanager:
     usage: /<command>
+    description: Type /nshcgamemanger to get the usage
   nshcbossbar:
     usage: /<command>
+    description: Type /nshcbossbar to get the usage
   nshcscoreboard:
     usage: /<command>
+    description: Type /nshcscoreboard to get the usage
